@@ -1,37 +1,49 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
+    <v-app>
+        <v-app-bar app>
+            <v-toolbar-title class="headline text-uppercase">
+                <span>Starships</span>
+            </v-toolbar-title>
+            <v-spacer/>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+            <v-form
+                @submit.prevent="search"
+            >
+                <v-text-field
+                    v-model="searchQuery"
+                    placeholder="Поиск"
+                    hide-details
+                    single-line
+                    clearable
+                    color="gray"
+                />
+            </v-form>
+            <v-btn
+                to="/"
+            >
+                Главная
+            </v-btn>
+        </v-app-bar>
+
+        <v-content>
+            <router-view/>
+        </v-content>
+    </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 
 export default Vue.extend({
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-  data: () => ({
-    //
-  }),
+    name: 'App',
+    data: () => ({
+        searchQuery: '',
+    }),
+    methods: {
+        search() {
+            this.$router.push(`/starship/list?search=${this.searchQuery}`);
+            this.searchQuery = '';
+        },
+    },
 });
 </script>
